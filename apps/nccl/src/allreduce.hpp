@@ -131,6 +131,7 @@ __global__ void __launch_bounds__(1024, 1)
     allreduce6(T* buff, T* scratch, T* resultBuff, mscclpp::DeviceHandle<mscclpp::SmChannel>* smChannels, int rank,
                int nRanksPerNode, int worldSize, size_t nelems, uint32_t flag) {
   // This version of allreduce only works for single nodes
+  nRanksPerNode = min(worldSize, nRanksPerNode);        /*TODO: needs a proper fix */
   if (worldSize != nRanksPerNode) return;
   nelems = nelems / (sizeof(int) / sizeof(T));
   const int nPeers = nRanksPerNode - 1;
@@ -269,6 +270,7 @@ __global__ void __launch_bounds__(1024, 1)
     allreduce7(T* buff, T* scratch, T* resultBuff, mscclpp::DeviceHandle<mscclpp::SmChannel>* smChannels, int rank,
                int nRanksPerNode, int worldSize, size_t nelems, uint32_t flag) {
   // This version of allreduce only works for single nodes
+  nRanksPerNode = min(worldSize, nRanksPerNode);        /*TODO: needs a proper fix */
   if (worldSize != nRanksPerNode) return;
   nelems = nelems / (sizeof(int) / sizeof(T));
   const int nPeers = nRanksPerNode - 1;
