@@ -162,7 +162,7 @@ MSCCLPP_NCCL_API mscclpp_ncclResult_t mscclpp_ncclGetVersion(int* version) {
 
 MSCCLPP_NCCL_API mscclpp_ncclResult_t mscclpp_ncclGetUniqueId(mscclpp_ncclUniqueId* uniqueId) {
   if (uniqueId == nullptr) return mscclpp_ncclInvalidArgument;
-  if (MSCCLPP_UNIQUE_ID_BYTES != NCCL_UNIQUE_ID_BYTES) return mscclpp_ncclInternalError;
+  if (MSCCLPP_UNIQUE_ID_BYTES != MSCCLPP_NCCL_UNIQUE_ID_BYTES) return mscclpp_ncclInternalError;
   mscclpp::UniqueId id = mscclpp::TcpBootstrap::createUniqueId();
   memcpy(uniqueId, &id, sizeof(mscclpp_ncclUniqueId));
   return mscclpp_ncclSuccess;
