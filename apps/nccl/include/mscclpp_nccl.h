@@ -382,7 +382,7 @@ mscclpp_ncclResult_t  mscclpp_ncclAllToAll(const void* sendbuff, void* recvbuff,
 mscclpp_ncclResult_t pmscclpp_ncclAllToAll(const void* sendbuff, void* recvbuff, size_t count,
     mscclpp_ncclDataType_t datatype, mscclpp_ncclComm_t comm, cudaStream_t stream);
 /*! @brief Opaque handle to MSCCL algorithm */
-typedef int mscclAlgoHandle_t;
+//typedef int mscclAlgoHandle_t;
 
 /*! @brief MSCCL Load Algorithm
  *
@@ -390,8 +390,8 @@ typedef int mscclAlgoHandle_t;
  * its handle via mscclAlgoHandle. This API is expected to be called by MSCCL
  * scheduler instead of end users.
  */
-mscclpp_ncclResult_t  mscclLoadAlgo(const char *mscclAlgoFilePath, mscclAlgoHandle_t *mscclAlgoHandle, int rank);
-mscclpp_ncclResult_t pmscclLoadAlgo(const char *mscclAlgoFilePath, mscclAlgoHandle_t *mscclAlgoHandle, int rank);
+//mscclpp_ncclResult_t  mscclLoadAlgo(const char *mscclAlgoFilePath, mscclAlgoHandle_t *mscclAlgoHandle, int rank);
+//mscclpp_ncclResult_t pmscclLoadAlgo(const char *mscclAlgoFilePath, mscclAlgoHandle_t *mscclAlgoHandle, int rank);
 
 /*! @brief MSCCL Run Algorithm
  *
@@ -400,24 +400,24 @@ mscclpp_ncclResult_t pmscclLoadAlgo(const char *mscclAlgoFilePath, mscclAlgoHand
  * is a general-purposed API. This API is expected to be called by MSCCL
  * scheduler instead of end users.
  */
-mscclpp_ncclResult_t  mscclRunAlgo(
-    const void* sendBuff, const size_t sendCounts[], const size_t sDisPls[],
-    void* recvBuff, const size_t recvCounts[], const size_t rDisPls[],
-    size_t count, mscclpp_ncclDataType_t dataType, int root, int peer, mscclpp_ncclRedOp_t op,
-    mscclAlgoHandle_t mscclAlgoHandle, mscclpp_ncclComm_t comm, cudaStream_t stream);
-mscclpp_ncclResult_t pmscclRunAlgo(
-    const void* sendBuff, const size_t sendCounts[], const size_t sDisPls[],
-    void* recvBuff, const size_t recvCounts[], const size_t rDisPls[],
-    size_t count, mscclpp_ncclDataType_t dataType, int root, int peer, mscclpp_ncclRedOp_t op,
-    mscclAlgoHandle_t mscclAlgoHandle, mscclpp_ncclComm_t comm, cudaStream_t stream);
+//mscclpp_ncclResult_t  mscclRunAlgo(
+//    const void* sendBuff, const size_t sendCounts[], const size_t sDisPls[],
+//    void* recvBuff, const size_t recvCounts[], const size_t rDisPls[],
+//    size_t count, mscclpp_ncclDataType_t dataType, int root, int peer, mscclpp_ncclRedOp_t op,
+//    mscclAlgoHandle_t mscclAlgoHandle, mscclpp_ncclComm_t comm, cudaStream_t stream);
+//mscclpp_ncclResult_t pmscclRunAlgo(
+//    const void* sendBuff, const size_t sendCounts[], const size_t sDisPls[],
+//    void* recvBuff, const size_t recvCounts[], const size_t rDisPls[],
+//    size_t count, mscclpp_ncclDataType_t dataType, int root, int peer, mscclpp_ncclRedOp_t op,
+//    mscclAlgoHandle_t mscclAlgoHandle, mscclpp_ncclComm_t comm, cudaStream_t stream);
 
 /*! @brief MSCCL Load Algorithm
  *
  * @details Unload MSCCL algorithm previous loaded using its handle. This API
  * is expected to be called by MSCCL scheduler instead of end users.
  */
-mscclpp_ncclResult_t mscclUnloadAlgo(mscclAlgoHandle_t mscclAlgoHandle);
-mscclpp_ncclResult_t pmscclUnloadAlgo(mscclAlgoHandle_t mscclAlgoHandle);
+//mscclpp_ncclResult_t mscclUnloadAlgo(mscclAlgoHandle_t mscclAlgoHandle);
+//mscclpp_ncclResult_t pmscclUnloadAlgo(mscclAlgoHandle_t mscclAlgoHandle);
 
 /*
  * Group semantics
