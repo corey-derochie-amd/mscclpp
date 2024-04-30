@@ -164,7 +164,6 @@ MSCCLPP_NCCL_API mscclpp_ncclResult_t mscclpp_ncclGetUniqueId(mscclpp_ncclUnique
   if (uniqueId == nullptr) return mscclpp_ncclInvalidArgument;
   if (MSCCLPP_UNIQUE_ID_BYTES != MSCCLPP_NCCL_UNIQUE_ID_BYTES) return mscclpp_ncclInternalError;
   mscclpp::UniqueId id = mscclpp::TcpBootstrap::createUniqueId();
-  printf("mscclpp UniqueId: %p\n", id);
   memcpy(uniqueId, &id, sizeof(mscclpp_ncclUniqueId));
   return mscclpp_ncclSuccess;
 }
