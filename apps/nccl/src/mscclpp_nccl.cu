@@ -164,6 +164,7 @@ MSCCLPP_NCCL_API mscclpp_ncclResult_t mscclpp_ncclGetUniqueId(mscclpp_ncclUnique
   if (uniqueId == nullptr) return mscclpp_ncclInvalidArgument;
   if (MSCCLPP_UNIQUE_ID_BYTES != MSCCLPP_NCCL_UNIQUE_ID_BYTES) return mscclpp_ncclInternalError;
   mscclpp::UniqueId id = mscclpp::TcpBootstrap::createUniqueId();
+  printf("mscclpp UniqueId: %p\n", id);
   memcpy(uniqueId, &id, sizeof(mscclpp_ncclUniqueId));
   return mscclpp_ncclSuccess;
 }
@@ -349,7 +350,9 @@ MSCCLPP_NCCL_API mscclpp_ncclResult_t mscclpp_ncclAllReduce(const void* sendbuff
     it = comm->channelInfos.emplace(key, channelInfo).first;
 
     // setup smOutChannels (src: recvbuff, dst: remote recvbuff)
-    if (bytes > (1 << 20)) {
+    // if (bytes > (1 << 20)) {
+    // Increasing to 64MB from 1MB
+    if (bytes > (1 << 26)) {
       std::vector<mscclpp::RegisteredMemory> remoteMemories =
           setupRemoteMemories(comm->comm, rank, recvbuff, bytes, mscclpp::Transport::CudaIpc);
       std::vector<mscclpp::SmChannel> outChannels = setupSmChannels(comm, remoteMemories, recvbuff);
