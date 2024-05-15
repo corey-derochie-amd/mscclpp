@@ -155,12 +155,14 @@ static std::shared_ptr<mscclpp::DeviceHandle<mscclpp::SmChannel>> setupSmChannel
 }
 
 NCCL_API ncclResult_t ncclGetVersion(int* version) {
+  printf("ncclGetVersion\n");
   if (version == nullptr) return ncclInvalidArgument;
   *version = MSCCLPP_VERSION;
   return ncclSuccess;
 }
 
 NCCL_API ncclResult_t ncclGetUniqueId(ncclUniqueId* uniqueId) {
+  printf("ncclGetUniqueId\n");
   if (uniqueId == nullptr) return ncclInvalidArgument;
   if (MSCCLPP_UNIQUE_ID_BYTES != NCCL_UNIQUE_ID_BYTES) return ncclInternalError;
   mscclpp::UniqueId id = mscclpp::TcpBootstrap::createUniqueId();
@@ -170,12 +172,14 @@ NCCL_API ncclResult_t ncclGetUniqueId(ncclUniqueId* uniqueId) {
 
 NCCL_API ncclResult_t ncclCommInitRankConfig(ncclComm_t* comm, int nranks, ncclUniqueId commId, int rank,
                                              ncclConfig_t* config) {
+  printf("ncclCommInitRankConfig\n");
   // TODO: implement this function
   //return ncclInternalError;
   return ncclCommInitRank(comm, nranks, commId, rank);
 }
 
 NCCL_API ncclResult_t ncclCommInitRank(ncclComm_t* comm, int nranks, ncclUniqueId commId, int rank) {
+  printf("ncclCommInitRank\n");
   if (comm == nullptr) return ncclInvalidArgument;
   if (nranks < 0 || rank < 0 || rank >= nranks) return ncclInvalidArgument;
   std::shared_ptr<mscclpp::TcpBootstrap> bootstrap = std::make_shared<mscclpp::TcpBootstrap>(rank, nranks);
@@ -220,27 +224,32 @@ NCCL_API ncclResult_t ncclCommInitRank(ncclComm_t* comm, int nranks, ncclUniqueI
 }
 
 NCCL_API ncclResult_t ncclCommInitAll(ncclComm_t*, int, const int*) {
+  printf("ncclCommInitAll\n");
   // TODO: implement this function
   return ncclInternalError;
 }
 
 NCCL_API ncclResult_t ncclCommFinalize(ncclComm_t comm) {
+  printf("ncclCommFinalize\n");
   comm->comm->bootstrap()->barrier();
   return ncclSuccess;
 }
 
 NCCL_API ncclResult_t ncclCommDestroy(ncclComm_t comm) {
+  printf("ncclCommDestroy\n");
   if (comm == nullptr) return ncclInvalidArgument;
   delete comm;
   return ncclSuccess;
 }
 
 NCCL_API ncclResult_t ncclCommAbort(ncclComm_t) {
+  printf("ncclCommAbort\n");
   // TODO: implement this function
   return ncclSuccess;
 }
 
 NCCL_API ncclResult_t ncclCommSplit(ncclComm_t, int, int, ncclComm_t*, ncclConfig_t*) {
+  printf("ncclCommSplit\n");
   // TODO: implement this function
   return ncclInternalError;
 }
@@ -278,24 +287,28 @@ NCCL_API const char* ncclGetLastError(ncclComm_t) {
 }
 
 NCCL_API ncclResult_t ncclCommGetAsyncError(ncclComm_t, ncclResult_t* asyncError) {
+  printf("ncclCommGetAsyncError\n");
   if (asyncError == nullptr) return ncclInvalidArgument;
   *asyncError = ncclSuccess;
   return ncclSuccess;
 }
 
 NCCL_API ncclResult_t ncclCommCount(const ncclComm_t comm, int* count) {
+  printf("ncclCommCount\n");
   if (comm == nullptr || count == nullptr) return ncclInvalidArgument;
   *count = comm->comm->bootstrap()->getNranks();
   return ncclSuccess;
 }
 
 NCCL_API ncclResult_t ncclCommCuDevice(const ncclComm_t comm, int* device) {
+  printf("ncclCommCuDevice\n");
   if (comm == nullptr || device == nullptr) return ncclInvalidArgument;
   *device = comm->comm->bootstrap()->getRank();
   return ncclSuccess;
 }
 
 NCCL_API ncclResult_t ncclCommUserRank(const ncclComm_t comm, int* rank) {
+  printf("ncclCommUserRank\n");
   if (comm == nullptr || rank == nullptr) return ncclInvalidArgument;
   *rank = comm->comm->bootstrap()->getRank();
   return ncclSuccess;
@@ -308,6 +321,7 @@ NCCL_API ncclResult_t ncclRedOpCreatePreMulSum(ncclRedOp_t*, void*, ncclDataType
 }
 
 NCCL_API ncclResult_t ncclRedOpDestroy(ncclRedOp_t, ncclComm_t) {
+  printf("ncclRedOpDestroy\n");
   // TODO: implement this function
   return ncclInternalError;
 }
@@ -332,6 +346,7 @@ NCCL_API ncclResult_t ncclBroadcast(const void*, void*, size_t, ncclDataType_t,
 
 NCCL_API ncclResult_t ncclAllReduce(const void* sendbuff, void* recvbuff, size_t count, ncclDataType_t datatype,
                                     ncclRedOp_t, ncclComm_t comm, cudaStream_t stream) {
+  printf("ncclAllReduce\n");
   if (count < 8)
           count =  8;
   size_t bytes = count * ncclTypeSize(datatype);
@@ -391,6 +406,7 @@ NCCL_API ncclResult_t ncclReduceScatter(const void*, void*, size_t, ncclDataType
 
 NCCL_API ncclResult_t ncclAllGather(const void* sendbuff, void* recvbuff, size_t sendcount, ncclDataType_t datatype,
                                     ncclComm_t comm, cudaStream_t stream) {
+  printf("ncclAllGather\n");
   if (sendcount < 1) {
 	  return ncclSuccess;
   }
@@ -444,11 +460,13 @@ NCCL_API ncclResult_t ncclAllToAll(const void*, void*, size_t, ncclDataType_t,
 }
 
 NCCL_API ncclResult_t ncclGroupStart() {
+  printf("ncclGroupStart\n");
   // Do nothing
   return ncclSuccess;
 }
 
 NCCL_API ncclResult_t ncclGroupEnd() {
+  printf("ncclGroupEnd\n");
   // Do nothing
   return ncclSuccess;
 }
